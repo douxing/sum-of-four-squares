@@ -195,7 +195,7 @@ int decompose_prime(mpz_t a, mpz_t b, const mpz_t n)
     return 1;
   }
 
-  gmp_printf("iunit(%Zd, %Zd)\n", b, n);
+  // gmp_printf("iunit(%Zd, %Zd)\n", b, n);
   mpz_mul(a, b, b);
   mpz_add_ui(a, a, 1);
   mpz_mod(a, a, n);
@@ -295,7 +295,7 @@ int decompose(mpz_t fours[FOUR], mpz_t n)
 
   isqrt(sqr, p, n);
 
-  gmp_printf("isqrt(%Zd, %Zd, %Zd)\n", sqr, p, n);
+  // gmp_printf("isqrt(%Zd, %Zd, %Zd)\n", sqr, p, n);
 
   if (!mpz_sgn(p)) {
     mpz_set_ui(fours[0], 0);
@@ -321,7 +321,7 @@ int decompose(mpz_t fours[FOUR], mpz_t n)
   }
 
   if (mpz_tstbit(n, 0) &&  mpz_tstbit(n, 1) && mpz_tstbit(n, 2)) {
-    gmp_printf("n == 7 mod 8\n");
+    // gmp_printf("n == 7 mod 8\n");
     // in this case: n & 7 = 7, which means n = 8m + 7 (n = ...111 base2)
     // subtract largest square delta^2
     // s.t. (n > delta^2) and (delta^2 % 8 != 0)
@@ -346,7 +346,7 @@ int decompose(mpz_t fours[FOUR], mpz_t n)
 
     isqrt(sqr, p, n);
   } else {
-    gmp_printf("n != 7 mod 8\n");
+    // gmp_printf("n != 7 mod 8\n");
     mpz_set_ui(delta, 0); // only 3 square roots is enough
   }
 
@@ -357,7 +357,7 @@ int decompose(mpz_t fours[FOUR], mpz_t n)
   
   // check for special cases:
   if (special_case_p(fours, n)) {
-    gmp_printf("is special case: %Zd\n", n);
+    // gmp_printf("is special case: %Zd\n", n);
     // fours[1], fours[2], fours[3] set
     mpz_set(fours[0], delta);
     sort_scaled(fours, v);
@@ -365,12 +365,12 @@ int decompose(mpz_t fours[FOUR], mpz_t n)
     return 1;
   }
 
-  gmp_printf("NOT special case: %Zd\n", n);
+  // gmp_printf("NOT special case: %Zd\n", n);
 
   // Case 1: n % 4 == 3, n = x^2 + 2*p, p % 4 == 1
   //         p is a prime, p = x^2 + y^2 => n = x^2 + (y+z)^2 + (y-z)^2
   if (mpz_tstbit(n, 0) && mpz_tstbit(n, 1)) {
-    gmp_printf("CASE 1\n");
+    // gmp_printf("CASE 1\n");
 
     if (!mpz_tstbit(sqr, 0)) {
       mpz_sub_ui(sqr, sqr, 1);
@@ -416,7 +416,7 @@ int decompose(mpz_t fours[FOUR], mpz_t n)
   assert((!mpz_tstbit(n, 0) && mpz_tstbit(n, 1))
 	 || (mpz_tstbit(n, 0) && !mpz_tstbit(n, 1)));
 
-  gmp_printf("CASE 2\n");
+  // gmp_printf("CASE 2\n");
 
   mpz_sub(r0, n, sqr);
   if (!mpz_tstbit(r0, 0)) {
