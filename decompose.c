@@ -139,8 +139,8 @@ int iunit(mpz_t iu, const mpz_t p)
   assert(!mpz_tstbit(p, 1));
 
   // 0: continue while loop
-  // 1: p == ui^2, do nothing after the while loop
-  // 2: calculte ui using b := b^((p - 1) / 4) mod p
+  // 1: calculte ui using b := b^((p - 1) / 4) mod p
+  // 2: p == ui^2, do nothing after the while loop
   int flag = 0;
 
   mpz_t q, t;
@@ -148,7 +148,7 @@ int iunit(mpz_t iu, const mpz_t p)
 
   if (mpz_tstbit(p, 2)) {
     // with pre-conditions, this implies q & 7 == 5 (q == ...101 base2)
-    flag = 2;
+    flag = 1;
     mpz_set_ui(q, 2);
   } else {
     flag = 0;
@@ -164,21 +164,22 @@ int iunit(mpz_t iu, const mpz_t p)
 	  // too many iterates, test if p is a square
 	  isqrt(iu, t, p);
 	  if (!mpz_sgn(t)) {
-	    flag = 1;
+	    flag = 2;
 	  }
 	}
       } else {
-	flag = 2;
+	flag = 1;
       }
     } while(!flag);
   }
 
-  if (flag == 2) {
+  if (flag == 1) {
     mpz_tdiv_q_2exp(t, p, 2); // no need to minus 2 before shift
     mpz_powm(iu, q, t, p);
   }
 
   mpz_clears(q, t, NULL);
+  return flag - 1;
 }
 
 // returns 1 on success: p = a^2 + b^2
