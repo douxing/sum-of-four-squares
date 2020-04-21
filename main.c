@@ -17,10 +17,10 @@ int from_args(int argc, char *argv[])
     if (gmp_sscanf(argv[i], "%Zd", n)) {
       mpz_set(t, n);
       if (decompose(fours, t)) {
-  	gmp_printf("\n%d:\n%Zd =\n%Zd\n%Zd\n%Zd\n%Zd\n",
-  		   i, n, fours[0], fours[1], fours[2], fours[3]);
+        gmp_printf("\n%d:\n%Zd =\n%Zd\n%Zd\n%Zd\n%Zd\n",
+                   i, n, fours[0], fours[1], fours[2], fours[3]);
       } else {
-	printf("impossible: %Zd");
+        printf("impossible: %Zd");
       }
     } else {
       printf("%4d: failed to parse: %s\n", i, argv[i]);
@@ -54,11 +54,11 @@ int u32()
       mpz_add(t, t, square);
 
       if (!mpz_cmp(n, t)) {
-	gmp_printf("%11d: [%Zd, %Zd, %Zd, %Zd]\n\n",
-		   i, fours[0], fours[1], fours[2], fours[3]);
+        gmp_printf("%10u: [%Zd, %Zd, %Zd, %Zd]\n",
+                   i, fours[0], fours[1], fours[2], fours[3]);
       } else {
-	gmp_printf("error for: %d\n", i);
-	break;
+        gmp_printf("error for: %d\n", i);
+        break;
       }
     } else {
       gmp_printf("impossible for %d\n", i);
